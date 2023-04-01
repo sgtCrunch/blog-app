@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}Users{% endblock %}
+
+{% block content%}
+
+
+<br>
+<div class="row">
+    <div class="col-md list-group">
+        {% for user in users %}
+        <a class="list-group-item list-group-item-action" href="/users/{{user.id}}">{{ user.full_name }}</a>
+        {% endfor %}
+    </div>
+    <div class="col-md"></div>
+    <div class="col-md"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md">
+        <form action="/users/new">
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
