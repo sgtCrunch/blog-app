@@ -1,0 +1,56 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}Add Post{% endblock %}
+
+{% block content%}
+
+
+<br>
+<div class="row">
+    
+        <form action="/users/{{user_id}}/posts/new" method="POST">
+            <div class="col-sm-6">
+                <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" rows="3"></textarea>
+                </div>
+
+                {%for tag in tags %}
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="tags" type="checkbox" id="inlineCheckbox1" value="{{tag.id}}">
+                    <label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
+                </div>
+                
+                {% endfor %}
+
+            </div>
+
+            <br>
+
+            <div class="row">
+
+                <div class="col-sm-1">
+                    <form action="/users/{{user_id}}">
+                        <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                    </form>
+                </div>
+                
+                <div class="col-sm-1">
+                    <button  class="btn btn-success" type="submit" class="btn btn-success">Submit</button>
+                </div>
+
+            </div>
+        </form>
+
+</div>
+
+
+{% endblock %}

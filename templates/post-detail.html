@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}{{ post.title }}{% endblock %}
+
+{% block content%}
+<br>
+
+<div class="row">
+    <div class="col-md-8">
+        <blockquote class="blockquote">
+            <p class="mb-3">{{post.content}}</p>
+            <footer class="blockquote-footer">By <cite title="Source Title">{{post.user.full_name}}</cite></footer>
+        </blockquote>
+    </div>
+</div>
+
+<div class="row">
+    <h4>Tags: 
+        {% for tag in tags %}
+            <a href="/tags/{{tag.id}}" class="badge bg-primary text-decoration-none">{{ tag.name }}</a>
+        {% endfor %}
+    </h4>
+</div>
+
+<br>
+
+<div class="row">
+
+    <div class="col-sm-1">
+        <form action="/users/{{post.user.id}}">
+            <button type="submit" class="btn btn-outline-primary">Cancel</button>
+        </form>
+    </div>
+
+    <div class="col-sm-1">
+        <form action="/posts/{{post.id}}/edit">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+
+    <div class="col-sm-1">
+        <form action="/posts/{{post.id}}/delete" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+    
+</div>
+
+{% endblock %}

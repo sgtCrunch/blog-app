@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}Create A Tag{% endblock %}
+
+{% block content%}
+
+
+<br>
+<div class="row">
+    <div class="col-sm-4">
+        <form action="/tags/new" method="POST">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+            <br>
+                        
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='/';" formnovalidate>Cancel</button>
+                </div>
+                
+                <div class="col-sm-1">
+                    <button  class="btn btn-success" type="submit" class="btn btn-success">Add</button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

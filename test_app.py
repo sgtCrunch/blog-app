@@ -1,6 +1,6 @@
 from unittest import TestCase
 from app import app
-from models import db, User
+from models import db, User, Post
 
 
         
@@ -24,14 +24,23 @@ class UsersViewsTestCase(TestCase):
     
     def setUp(self):
         """Add sample user."""
+        print("DLKJFDLKJFDLKJFLDKJFLDKJFLKJD")
         with app.app_context():
+            Post.query.delete()
             User.query.delete()
 
             john = User(first_name='John', last_name="Henderson")
-            
             db.session.add(john)
             db.session.commit()
 
+            print("ID", john.id)
+
+            post1 = Post(title="Test", user_id=john.id, 
+                content="The most common relationships are one-to-many relationships.")
+            db.session.add(post1)
+            db.session.commit()
+
+            self.post_id = post1.id
             self.user_id = john.id
 
     def tearDown(self):
@@ -71,3 +80,28 @@ class UsersViewsTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertNotIn("John Henderson", html)
+
+    def test_show_post(self):
+        with app.test_client() as client:
+            resp = client.get(f"/posts/{self.post_id}")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Test', html)
+
+    def test_add_post(self):
+        with app.test_client() as client:
+            d = {"title": "Test 2", "content": "test content"}
+            resp = client.post(f"/users/{self.user_id}/posts/new", data=d, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("Test 2", html)
+
+    def test_delete_post(self):
+        with app.test_client() as client:
+            resp = client.post(f"/posts/{self.post_id}/delete", follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn("Test", html)

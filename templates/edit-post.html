@@ -1,0 +1,60 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}Edit Post{% endblock %}
+
+{% block content%}
+
+
+<br>
+<div class="row">
+    
+        <form action="/posts/{{post.id}}/edit" method="POST">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" value="{{post.title}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" rows="3">{{post.content}}</textarea>
+                </div>
+
+                {%for tag in tags %}
+
+                <div class="form-check form-check-inline">
+                    {% if tag in post_tags %}
+                    <input class="form-check-input" name="tags" type="checkbox" id="inlineCheckbox1" value="{{tag.id}}" checked>
+                    {% else %}
+                    <input class="form-check-input" name="tags" type="checkbox" id="inlineCheckbox1" value="{{tag.id}}">
+                    {% endif %}
+                    <label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
+                </div>
+                
+                {% endfor %}
+
+            </div>
+
+            <br>
+
+            <div class="row">
+
+                <div class="col-sm-1">
+                    <form action="/users/{{post.user.id}}">
+                        <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                    </form>
+                </div>
+                
+                <div class="col-sm-1">
+                    <button  class="btn btn-success" type="submit" class="btn btn-success">edit</button>
+                </div>
+
+            </div>
+        </form>
+
+</div>
+
+
+{% endblock %}

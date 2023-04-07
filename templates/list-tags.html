@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+{% block h1 %}Tags{% endblock %}
+
+{% block content%}
+
+
+<br>
+<div class="row">
+    <div class="col-md list-group">
+        {% for tag in tags %}
+        <a class="list-group-item list-group-item-action" href="/tags/{{tag.id}}">{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+    <div class="col-md"></div>
+    <div class="col-md"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md">
+        <form action="/tags/new">
+            <button type="submit" class="btn btn-primary">Add Tag</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
